@@ -1,0 +1,16 @@
+{
+    "name": "instablam",
+    "short_name": "instab",
+    "description": "Take pictures and save in gallery",
+    "display": "standalone",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "images/camera_icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "background_color": "#FFF34E ",
+    "theme_color": "#FFC300 "
+}

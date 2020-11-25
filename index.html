@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instablam</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script/script.js"></script>
+</head>
+<body>
+    <main>
+        <section class="video">
+            <div class="">
+                <button class="start-stream"> Turn camera on </button>
+                <button class="stop-stream" disabled> Turn camera off  </button>
+            </div>
+            <p class="message error"> <!-- Plats för felmeddelanden --> </p>
+            <video src="" autoplay poster="" controls>
+
+            </video>
+        </section>
+
+        <section class="profile">
+           
+            <p>
+                <button disabled> Take picture </button>
+                <button class="change-facing"> <img src="images/switch_camera-512.png" alt=""> </button>
+            </p>  
+            <img src="/images/profile-pic-icon.png" alt="Profile picture" class="hidden" />
+            <!--"/images/profile-pic-icon.png"-->
+           
+        </section>
+
+        <section class="gallery">
+            <a href="" download class="downloadLink hidden"> Download photo</a>
+        </section>
+
+        <section class="gallery">
+            <h2>Memories</h2>
+
+            <div class="gallerySection" id="gallery">
+            <!--    <button id="next" > > </button>
+                <button class="deleteImg"> x </button> -->
+                <img src="/images/aurora.jpg" alt="" class="saved images">
+                <img src="/images/night.jpg" alt="" class="saved images">
+                <img src="/images/orange.jpg" alt="" class="saved images">
+                <a href="" download class="downloadLink hidden"> Download photo</a>
+            </div>
+        </section>
+
+        <section class = "lightBox">
+            <div class = "lightBox-Content">
+                <div class = "lightBoxClose">&times</div>
+                <img src ="" class = "lightBoxImage" alt="" >
+            </div>   
+        </section>
+
+    </main>
+</body>
+</html>
