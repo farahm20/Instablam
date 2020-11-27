@@ -1,20 +1,13 @@
-const galleryItems = document.querySelector(".gallerySection").children;
+const galleryItems = document.querySelector("#gallery").children;
 const lightBoxContainer = document.querySelector(".lightBox");
 const lightBoxImage = document.querySelector(".lightBoxImage");
 let index;
 let imageSrc;
 
-// refreshPage() ; //refreshes the page in middle of a search output
-// //*****the refresh page button function
-// export function refreshPage() {
-//         let refrehButton = document.getElementById('refresh');
-//         refrehButton.addEventListener('click', function() {
-//         setTimeout(location.reload(true),t)
-//     });  
-// }
 
 //******LightBOX event listener added to all the images recived from flickr api
 export function addClickToImages(){
+    console.log('works')
     for(let i = 0; i < galleryItems.length ; i++){
         console.log("For loop: all gallery Items " + galleryItems[i]);
         galleryItems[i].addEventListener("click", function(){

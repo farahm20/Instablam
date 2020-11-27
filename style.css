@@ -1,32 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
 *{
     padding: 0;
     box-sizing: border-box;
 }
 
 body{
-    background-color:#ee664c82 ;
+    margin: 0 auto;
+    background-color:#6a0102;
+}
+
+.wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    color: black;
 }
 
 .error {
     color: red;
     font-weight: bold;
     font-size: 1.2em;
-    background-color: #ee8d7982 ;
+    background-color: #832727 ;
     padding: 0.5em;
     min-height: 1.5em;
 }
 
 button {
-    background-color:#ce3f23;
+    background-color:#272525;
     padding: 0.8em 1em;
-    color: aliceblue;
+    color: #e5ddbb;
     border-radius: 10%;
-    font-weight: 400;
+    font-weight: bold;
     margin: 0.4em;
+    width: 145px;
+    height: 40px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+#askPermissionButton, #showNotificationButton{
+    width: 225px;
+    height: 40px;
+}
+
+.change-facing{
+    background-color: #e5ddbb;
+    margin: 0%;
+    padding: 0%;
+    width: 45px;
+    height: 40px;
+    border-radius: 25%;
 }
 
 button:hover {
@@ -54,7 +76,8 @@ button:hover {
 /*grid within a grid for the photos we get from flickr api*/
 .gallerySection{
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+/*    grid-template-columns: auto auto auto auto;*/
     grid-template-rows: auto auto auto auto;
     grid-column-gap: 10px;
     grid-row-gap: 35px;
@@ -73,6 +96,28 @@ button:hover {
 .gallerySection img:hover {
     opacity: 0.7;
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #832727;
+    padding: 20px;
+    border: 2px solid #e5ddbb;
+    border-radius: 7px;
+    box-shadow: 2px 2px 4px rgb(82 82 82);
+}
+ .card p {
+    font-size: 15px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bolder;
+    color: black;
+ }
+
+ .card a {
+     text-decoration: none;
+     color: #e5ddbb;
+ }
 
 /*Styling for lightbox. Image modal**/
 .lightBox .lightBoxImage {

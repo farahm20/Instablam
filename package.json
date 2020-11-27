@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "surge . --domain murky-temper.surge.sh",
+    "deploy": "surge . --domain farah-instablam.surge.sh/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

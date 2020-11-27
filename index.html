@@ -1,57 +1,88 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" , content="#832727">
+    <meta name="background-color" , content="#6a0102">
+    <link rel="apple-touch-icon" href="/images/camera_icon-192.png">
+    <link rel="shortcut icon" href="/images/camera_icon-192.png">
     <title>Instablam</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script/script.js"></script>
 </head>
+
 <body>
-    <main>
+    <main class="wrapper">
         <section class="video">
             <div class="">
-                <button class="start-stream"> Turn camera on </button>
-                <button class="stop-stream" disabled> Turn camera off  </button>
+                <button class="start-stream">Camera on!</button>
+                <button class="stop-stream" disabled>Camera off!</button>
             </div>
-            <p class="message error"> <!-- Plats för felmeddelanden --> </p>
+            <p class="message error">
+                <!-- Plats för felmeddelanden -->
+            </p>
             <video src="" autoplay poster="" controls>
 
             </video>
         </section>
 
         <section class="profile">
-           
+
             <p>
                 <button disabled> Take picture </button>
                 <button class="change-facing"> <img src="images/switch_camera-512.png" alt=""> </button>
-            </p>  
-           
+            </p>
+
         </section>
 
 
-        
-
-            <div class="gallerySection" id="gallery">
+        <div class="gallerySection" id="gallery">
             <!--    <button id="next" > > </button>
                 <button class="deleteImg"> x </button> -->
+            <section class="photo card">
                 <img src="/images/aurora.jpg" alt="" class="saved images">
+                <article class="photoLocation">
+                    <p>City: Solheimasandur</p>
+                    <p>Country: Iceland</p>
+                </article><button> Download photo </button>
+                <button class="deletePhoto"> Delete </button>
+            </section>
+            <section class="photo card">
                 <img src="/images/night.jpg" alt="" class="saved images">
+                <article class="photoLocation">
+                    <p>City: Alberta</p>
+                    <p>Country: Canada</p>
+                </article><button> Download photo </button>
+                <button class="deletePhoto"> Delete </button>
+            </section>
+            <section class="photo card">
                 <img src="/images/orange.jpg" alt="" class="saved images">
-                <a href="" download class="downloadLink hidden"> Download photo</a>
-            </div>
+                <article class="photoLocation">
+                    <p>City: Alberta</p>
+                    <p>Country: Canada</p>
+                </article><button> Download photo </button>
+                <button class="deletePhoto"> Delete </button>
+            </section>
+
+        </div>
         <section>
             <button id="askPermissionButton">Ask for permission to notify</button>
-            <p class="permission-info"> Permission not granted</p>
-        </section>    
+        </section>
 
-        <section class = "lightBox">
-            <div class = "lightBox-Content">
-                <div class = "lightBoxClose">&times</div>
-                <img src ="" class = "lightBoxImage" alt="" >
-            </div>   
+        <section>
+            <button id="showNotificationButton"> Show notification </button>
+        </section>
+
+        <section class="lightBox">
+            <div class="lightBox-Content">
+                <div class="lightBoxClose">&times</div>
+                <img src="" class="lightBoxImage" alt="">
+            </div>
         </section>
 
     </main>
 </body>
+
 </html>

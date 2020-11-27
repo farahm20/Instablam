@@ -35,7 +35,6 @@ function cameraSettings() {
     const stopButton = document.querySelector('.video .stop-stream');
     const photoButton = document.querySelector('.profile button');
 
-    const profilePic = document.querySelector('.profile > img');
     const facingButton = document.querySelector('.profile .change-facing');
 
 
@@ -100,11 +99,9 @@ function cameraSettings() {
         let blob = await capture.takePhoto();
 
         let imgUrl = URL.createObjectURL(blob);
-        //    profilePic.src = imgUrl;
-        //    profilePic.classList.remove('hidden');
+        
 
-
-        gallery.innerHTML += `<section class = "image Card">
+        gallery.innerHTML += `<section class = "photo card">
                                         <img class = "photoTaken" src="${imgUrl}" alt="">
                                         <article class = "photoLocation">
                                             <p>City: ${city}</p>
@@ -126,7 +123,9 @@ function cameraSettings() {
             })
 
         );
+        
 
+        notificationSettings();
     })
 
 }
@@ -170,11 +169,11 @@ async function getAddressFromPosition(lat, lng, onSuccess) {
 }
 
 function notificationSettings() {
-    let notificationsPermission = 'default';
+    let notificationsPermission = false;
     const askPermissionButton = document.querySelector('#askPermissionButton');
     askPermissionButton.addEventListener('click', async () => {
         const answer = await Notification.requestPermission();
-        notificationsPermission = answer;
+        notificationsPermission = true;
         if (answer == 'granted') {
             console.log('Notification: permission granted, user allowed notifications');
         } else if (answer == 'denied') {
@@ -182,5 +181,24 @@ function notificationSettings() {
         } else {
             console.log('Notification: user declined to answer');
         }
+    })
+
+    showNotificationButton.addEventListener('click', () => {
+        if(!notificationsPermission) {
+            console.log('Notification permission not granted!');
+            return;
+        }
+
+        const options = {
+            body: "Welcome to Instablam :) ",
+            icon: '../images/camera_icon-512.png'
+        }
+        let notif = new Notification('Reminder', options);
+        notif.addEventListener('show', () => {
+            console.log('Showing notification');
+        })
+        notif.addEventListener('click', () => {
+            console.log('User clicked on notification');
+        })
     })
 }
