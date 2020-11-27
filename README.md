@@ -14,9 +14,9 @@ It can work both on mobile and desktop. The App takes pictures, with location, a
 |Desktop Firefox |⛔|✔️|⛔|✔️|Inte testat|Inte testat|
 |Mobil   Firefox |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
 |Desktop Safari  |⛔|?|✔️||✔️|⛔|⛔|
-|Mobil   Safari  |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
-|Desktop Edge    |✔️|✔️|✔️|✔️|Inte testat|Inte testat|
-|Mobil   Edge    |✔️|✔️|✔️|⛔|Inte testat|Inte testat|
+|Mobil   Safari  |Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|
+|Desktop Edge    |Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|
+|Mobil   Edge    |Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|Inte testat|
 
 
 ## Lighthouse
