@@ -1,12 +1,13 @@
-import {addClickToImages, lightBox, selectImageforLightBox} from './module/lightBox.js';
+import { addClickToImages, lightBox, selectImageforLightBox } from './module/lightBox.js';
 
-if( 'serviceWorker' in navigator ) {
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
-    .then(reg => {
-        console.log('Service worker registered.');
-    })
+        .then(reg => {
+            console.log('Service worker registered.');
+        })
 }
-
+let city;
+let country;
 // async function allowCamera() {
 //     if('mediaDevices' in navigator) {
 //         const md = navigator.mediaDevices;
@@ -19,9 +20,13 @@ if( 'serviceWorker' in navigator ) {
 // allowCamera();
 
 window.addEventListener('load', () => {
-    if('mediaDevices' in navigator){
+    if ('mediaDevices' in navigator) {
         cameraSettings();
     }
+    if ('geolocation' in navigator) {
+        locationSettings();
+    }
+    notificationSettings();
 })
 
 function cameraSettings() {
@@ -32,12 +37,12 @@ function cameraSettings() {
 
     const profilePic = document.querySelector('.profile > img');
     const facingButton = document.querySelector('.profile .change-facing');
-    
-    const downloadLink = document.querySelector('.gallery .downloadLink');
+
+
 
     let stream;
     let facing = 'environment';
- 
+
     showVideoButton.addEventListener('click', async () => {
         errorMessage.innerHTML = '';
         try {
@@ -58,11 +63,10 @@ function cameraSettings() {
 
     stopButton.addEventListener('click', () => {
         errorMessage.innerHTML = '';
-        if( !stream ) {
+        if (!stream) {
             errorMessage.innerHTML = 'Camera turned off.';
             return;
         }
-        // hur stoppa strömmen? Kolla dokumentationen
         let tracks = stream.getTracks();
         tracks.forEach(track => track.stop());
         stopButton.disabled = true;
@@ -71,13 +75,13 @@ function cameraSettings() {
     })
 
     facingButton.addEventListener('click', () => {
-        if( facing == 'environment' ) {
+        if (facing == 'environment') {
             facing = 'user';
-        //    facingButton.innerHTML = 'Show user';
+            //    facingButton.innerHTML = 'Show user';
         }
         else {
             facing = 'environment';
-        //    facingButton.innerHTML = 'Show environment';
+            //    facingButton.innerHTML = 'Show environment';
         }
         stopButton.click();
         showVideoButton.click();
@@ -85,66 +89,98 @@ function cameraSettings() {
 
     photoButton.addEventListener('click', async () => {
         errorMessage.innerHTML = '';
-        if( !stream ) {
+        if (!stream) {
             errorMessage.innerHTML = 'Cannot take photo. Camera is off.';
             return;
         }
-        
+
         let tracks = stream.getTracks();
         let videoTrack = tracks[0];
         let capture = new ImageCapture(videoTrack);
         let blob = await capture.takePhoto();
 
         let imgUrl = URL.createObjectURL(blob);
-        profilePic.src = imgUrl;
-        profilePic.classList.remove('hidden');
+        //    profilePic.src = imgUrl;
+        //    profilePic.classList.remove('hidden');
 
-    
-        downloadLink.href = imgUrl;
-        downloadLink.classList.remove('hidden');
-        downloadLink.download = 'capture';
 
-        let index = 0;
-        const images = new Array();
-        images[index] = profilePic;
-       
-       // showImagesInHtml(images); 
+        gallery.innerHTML += `<section class = "image Card">
+                                        <img class = "photoTaken" src="${imgUrl}" alt="">
+                                        <article class = "photoLocation">
+                                            <p>City: ${city}</p>
+                                            <p>Country: ${country}</p> 
+                                        </article>
+                                    
+                                        <button><a href="${imgUrl}" download class="downloadPhoto hidden"> Download photo</a></button>
+                                        <button class = "deletePhoto"> Delete </button>
+                                        </section>`;
 
-        let sendAsOutput = document.getElementById("gallery");
-        sendAsOutput.innerHTML = '';
-        var img = document.createElement('img');
-     //   img.src = profilePic.src;
-        img.src = images[index].src;
-        let galleryDiv = document.createElement('div')
-        galleryDiv.appendChild(img);
-        gallery.appendChild(galleryDiv);
-        index++;
-         
+        const downloadPhoto = document.querySelector(".downloadPhoto");
+        downloadPhoto.classList.remove('hidden');
+        downloadPhoto.download = "instaPhoto.jpeg";
+
+        let deletPhotoButton = document.querySelectorAll(".deletePhoto");
+        deletPhotoButton.forEach((element) =>
+            element.addEventListener("click", () => {
+                element.parentElement.remove();
+            })
+
+        );
+
     })
+
 }
 
-function showImagesInHtml(images) {
 
-    //  console.log("In the show images in HTML function");
-        let sendAsOutput = document.getElementById("gallery");
-        sendAsOutput.innerHTML = '';
-       
-        
-        images.forEach(element => {
-            var img = new image();
-            img.src = element.src;
-            let galleryDiv = document.createElement('div')
-            galleryDiv.appendChild(img);
-            gallery.appendChild(galleryDiv); 
+
+function locationSettings() {
+    try {
+        const geo = navigator.geolocation;
+        geo.getCurrentPosition(pos => {
+            let lat = pos.coords.latitude;
+            let lng = pos.coords.longitude;
+            // message.innerHTML = `You are at ${lat}, ${lng}.`;
+            getAddressFromPosition(lat, lng);
+        }, error => {
+            console.log(error);
         });
-    
-        addClickToImages();
+    } catch (e) {
+        console.log('Access denied from Geolocation API.');
     }
 
-//     function GFG_Fun() { 
-//         var img = new Image(); 
-//         img.src =  
-// 'https://media.geeksforgeeks.org/wp-content/uploads/20190529122828/bs21.png'; 
-//         document.getElementById('body').appendChild(img); 
-//         down.innerHTML = "Image Element Added.";  
-//     }  
+}
+
+async function getAddressFromPosition(lat, lng, onSuccess) {
+    const message = document.querySelector('.position');
+
+    try {
+        const response = await fetch(`https://geocode.xyz/${lat},${lng}?json=1`);
+        const data = await response.json();
+        console.log('Address: ', data)
+        if (data.error) {
+            message.innerHTML += `<br> Can not get location at this time. Please try again later.`;
+        } else {
+            city = data.city;
+            country = data.country;
+            console.log(city, " + ", country);
+        }
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+function notificationSettings() {
+    let notificationsPermission = 'default';
+    const askPermissionButton = document.querySelector('#askPermissionButton');
+    askPermissionButton.addEventListener('click', async () => {
+        const answer = await Notification.requestPermission();
+        notificationsPermission = answer;
+        if (answer == 'granted') {
+            console.log('Notification: permission granted, user allowed notifications');
+        } else if (answer == 'denied') {
+            console.log('Notification: user denied notifications');
+        } else {
+            console.log('Notification: user declined to answer');
+        }
+    })
+}
