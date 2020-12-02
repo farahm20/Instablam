@@ -29,6 +29,7 @@ window.addEventListener('load', () => {
     notificationSettings();
 })
 
+//turns on stream, allows taking photos and printing in html
 function cameraSettings() {
     const errorMessage = document.querySelector('.video > .error');
     const showVideoButton = document.querySelector('.video .start-stream');
@@ -37,11 +38,11 @@ function cameraSettings() {
 
     const facingButton = document.querySelector('.profile .change-facing');
 
-
-
     let stream;
     let facing = 'environment';
 
+    getStoredImages();
+    //start video stream
     showVideoButton.addEventListener('click', async () => {
         errorMessage.innerHTML = '';
         try {
@@ -60,6 +61,7 @@ function cameraSettings() {
         }
     })
 
+    //stop video stream
     stopButton.addEventListener('click', () => {
         errorMessage.innerHTML = '';
         if (!stream) {
@@ -73,6 +75,7 @@ function cameraSettings() {
         showVideoButton.disabled = false;
     })
 
+    //camera direction
     facingButton.addEventListener('click', () => {
         if (facing == 'environment') {
             facing = 'user';
@@ -85,7 +88,8 @@ function cameraSettings() {
         stopButton.click();
         showVideoButton.click();
     })
-
+    
+    //takes photo and creates a card with location in html
     photoButton.addEventListener('click', async () => {
         errorMessage.innerHTML = '';
         if (!stream) {
@@ -99,8 +103,8 @@ function cameraSettings() {
         let blob = await capture.takePhoto();
 
         let imgUrl = URL.createObjectURL(blob);
-        
 
+        //prints every photo taken on page
         gallery.innerHTML += `<section class = "photo card">
                                         <img class = "photoTaken" src="${imgUrl}" alt="">
                                         <article class = "photoLocation">
@@ -130,8 +134,63 @@ function cameraSettings() {
 
 }
 
+//take static images from Gallery and prints them in html.
+function getStoredImages(){
+    let storedImages = [
+        {
+            imgUrl: 'aurora.jpg',
+            city: 'Solheimasandur',
+            country: 'Iceland'
+        },
+        {
+            imgUrl: 'night.jpg',
+            city: 'Alberta',
+            country: 'Canada',
+        },
+        {
+            imgUrl: 'orange.jpg',
+            city: 'Alberta',
+            country: 'Canada',
+        }
+    ];
 
+    for(let i=0; i<storedImages.length; i++){
+    //  console.log("in for loop" + storedImages[i].city + " "+ i);
+         gallery.innerHTML += `<section class = "photo card">
+                                        <img class = "photoTaken" src="images/${storedImages[i].imgUrl}" alt="">
+                                        <article class = "photoLocation">
+                                            <p>City: ${storedImages[i].city}</p>
+                                            <p>Country: ${storedImages[i].country}</p> 
+                                        </article>
+                                    
+                                        <button><a href="${storedImages[i].imgUrl}" download class="downloadPhoto hidden"> Download photo</a></button>
+                                        <button class = "deletePhoto"> Delete </button>
+                                        </section>`;
 
+        let downloadPhotos = document.querySelectorAll(".downloadPhoto");
+       //takes the index i from for loop.
+        downloadPhotos.forEach((downloadPhoto, i) => {
+            downloadPhoto.classList.remove('hidden');
+            downloadPhoto.href = "images/" + storedImages[i].imgUrl;
+            // console.log("printing href: "+downloadPhoto.href)
+            downloadPhoto.download = "instaPhoto.jpg";
+        })
+    
+      
+        // let url = storedImages[i].imageUrl;
+       
+
+        let deletPhotoButton = document.querySelectorAll(".deletePhoto");
+        deletPhotoButton.forEach((element) =>
+            element.addEventListener("click", () => {
+                element.parentElement.remove();
+            })
+
+        );
+    }
+}
+
+//getting latitute and longitute
 function locationSettings() {
     try {
         const geo = navigator.geolocation;
@@ -149,7 +208,8 @@ function locationSettings() {
 
 }
 
-async function getAddressFromPosition(lat, lng, onSuccess) {
+//getting address form geo API
+async function getAddressFromPosition(lat, lng) {
     const message = document.querySelector('.position');
 
     try {
@@ -168,6 +228,7 @@ async function getAddressFromPosition(lat, lng, onSuccess) {
     }
 }
 
+// noitifications 
 function notificationSettings() {
     let notificationsPermission = false;
     const askPermissionButton = document.querySelector('#askPermissionButton');
